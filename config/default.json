@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://stan123:stan123@marvel-social-network-62sz8.mongodb.net/test?retryWrites=true&w=majority"
+}
