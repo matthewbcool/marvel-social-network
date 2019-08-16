@@ -46,10 +46,34 @@ router.post('/', auth, async (req, res) => {
       return res.json(profile)
     }
     profile = new Profile(profileFields)
-    await Profile.save()
+    await profile.save()
     res.json(profile)
   } catch (err) {
     console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar'])
+    res.json(profiles)
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+router.get('/user/:user_id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.user_id
+    }).populate('user', ['name', 'avatar'])
+    if (!profile)
+      return res.status(400).json({ msg: 'There is no profile for this user' })
+    res.json(profile)
+  } catch (error) {
+    console.error(error.message)
     res.status(500).send('Server Error')
   }
 })
