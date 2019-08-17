@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://stan123:stan123@marvel-social-network-62sz8.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "averysecrettoken"
+  "jwtSecret": "averysecrettoken",
+  "marvelpublicid": "f64367c5d2aea4a605e5b7de28cd3428",
+  "marvelprivateid": "1a67e55755a80e75136e310fa2617939a7defb2b"
 }

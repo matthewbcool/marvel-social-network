@@ -16,7 +16,8 @@ router.post(
     check(
       'password',
       'Please enter a password with 6 or more characters'
-    ).isLength({ min: 6 })
+    ).isLength({ min: 6 }),
+    check('heroId', 'Please use a valid heroId').isLength({ min: 7 })
   ],
   async (req, res) => {
     const errors = validationResult(req)
