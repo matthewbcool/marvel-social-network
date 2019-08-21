@@ -20,7 +20,7 @@ const Navbar = () => {
           </Button>
 
           <Button color='inherit' href='/register'>
-            Register
+            Sign-Up
           </Button>
 
           <Button color='inherit' href='/login'>

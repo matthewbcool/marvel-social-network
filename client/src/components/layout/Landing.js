@@ -9,7 +9,7 @@ const Landing = () => {
           <h1>Marvel Social Network</h1>
         </div>
         <Button size='large' href='/register'>
-          Register
+          Sign-Up
         </Button>
         <Button size='large' href='/login'>
           Login
