@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import { FormControl } from '@material-ui/core'
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -27,7 +28,7 @@ const Register = () => {
 
   return (
     <Fragment>
-      <form noValidate autoComplete='off'>
+      <FormControl required autoComplete='off'>
         <TextField
           id='outlined-email-input'
           label='Email'
@@ -39,7 +40,7 @@ const Register = () => {
           variant='outlined'
         />
         <TextField
-          id='outlined-email-input'
+          id='outlined-heroid-input'
           label='Hero Id'
           onChange={onChange}
           type='number'
@@ -69,14 +70,12 @@ const Register = () => {
         />
         <Button
           type='submit'
-          onSubmit={submitRegister}
           onClick={submitRegister}
-          contained
           variant='contained'
           color='primary'>
           Sign-Up
         </Button>
-      </form>
+      </FormControl>
     </Fragment>
   )
 }
