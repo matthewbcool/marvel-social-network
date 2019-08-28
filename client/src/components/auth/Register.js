@@ -1,10 +1,12 @@
 import React, { useState, Fragment } from 'react'
+import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { FormControl } from '@material-ui/core'
 import axios from 'axios'
+import { setAlert } from '../../actions/alert'
 
-const Register = () => {
+const Register = props => {
   const [registerData, setRegisterData] = useState({
     email: '',
     heroId: '',
@@ -23,7 +25,7 @@ const Register = () => {
     event.preventDefault()
     setRegisterData(registerData)
     if (registerData.password !== registerData.password2) {
-      console.log('passwords do not match')
+      props.setAlert('Passwords do not match', 'danger')
       setRegisterData({ email: '', password: '', password2: '' })
     } else {
       const newUser = {
@@ -106,4 +108,7 @@ const Register = () => {
   )
 }
 
-export default Register
+export default connect(
+  null,
+  { setAlert }
+)(Register)
