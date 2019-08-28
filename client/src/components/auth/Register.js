@@ -5,10 +5,10 @@ import Button from '@material-ui/core/Button'
 import { FormControl } from '@material-ui/core'
 import axios from 'axios'
 import { setAlert } from '../../actions/alert'
-
+import { register } from '../../actions/auth'
 import PropTypes from 'prop-types'
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   const [registerData, setRegisterData] = useState({
     email: '',
     heroId: '',
@@ -35,6 +35,7 @@ const Register = ({ setAlert }) => {
         password2: ''
       })
     } else {
+      register({ email, heroId, password })
       const newUser = {
         email,
         heroId,
@@ -46,10 +47,8 @@ const Register = ({ setAlert }) => {
             'Content-Type': 'application/json'
           }
         }
-        console.log(newUser)
         const body = JSON.stringify(newUser)
         const res = await axios.post('/api/users', body, config)
-        console.log(res.data)
         setRegisterData({ email: '', password: '', password2: '', heroId: '' })
       } catch (error) {
         console.error('there was an error')
@@ -116,10 +115,11 @@ const Register = ({ setAlert }) => {
 }
 
 Register.protoTypes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
 }
 
 export default connect(
   null,
-  { setAlert }
+  { setAlert, register }
 )(Register)
