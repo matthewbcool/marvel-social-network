@@ -9,9 +9,6 @@ const User = require('../../models/User')
 router.post(
   '/',
   [
-    check('name', 'Name is required')
-      .not()
-      .isEmpty(),
     check('email', 'Please enter an email').isEmail(),
     check(
       'password',
@@ -25,7 +22,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    const { name, email, password } = req.body
+    const { name, email, password, heroId } = req.body
     try {
       let user = await User.findOne({ email })
 
@@ -48,7 +45,8 @@ router.post(
         name,
         email,
         avatar,
-        password
+        password,
+        heroId
       })
       // encrypt pass using bcrypt
       const salt = await bcrypt.genSalt(10)

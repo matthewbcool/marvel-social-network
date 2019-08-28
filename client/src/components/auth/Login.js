@@ -2,26 +2,36 @@ import React, { useState, Fragment } from 'react'
 import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import Button from '@material-ui/core/Button'
-const Login = () => {
-  const [loginData, setLoginData] = useState({
-    name: '',
-    email: '',
-    heroId: '',
-    password: '',
-    password2: ''
-  })
+import axios from 'axios'
 
-  const { email, heroId, password, password2 } = loginData
+const Login = () => {
+  const [loginData, setLoginData] = useState({})
+
+  const { email, password } = loginData
   const onChange = event => {
     setLoginData({
       ...loginData,
       [event.target.name]: event.target.value
     })
   }
-  const submitLogin = event => {
+  const submitLogin = async event => {
     event.preventDefault()
-
     setLoginData(loginData)
+    if (loginData.email.length > 3 && loginData.password.length > 6) {
+      try {
+        const loginBody = {
+          email,
+          password
+        }
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        const res = await axios.post('api/auth', loginBody, config)
+        console.log(res.data)
+      } catch (error) {}
+    }
   }
 
   return (
@@ -40,6 +50,7 @@ const Login = () => {
         <TextField
           id='outlined-password-input'
           label='Password'
+          name='password'
           type='password'
           onChange={onChange}
           autoComplete='current-password'
@@ -51,7 +62,7 @@ const Login = () => {
           onClick={submitLogin}
           variant='contained'
           color='primary'>
-          Sign-Up
+          Sign-In
         </Button>
       </FormControl>
     </Fragment>

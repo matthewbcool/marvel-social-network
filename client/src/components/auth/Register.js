@@ -2,10 +2,10 @@ import React, { useState, Fragment } from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { FormControl } from '@material-ui/core'
+import axios from 'axios'
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({
-    name: '',
     email: '',
     heroId: '',
     password: '',
@@ -19,11 +19,33 @@ const Register = () => {
       [event.target.name]: event.target.value
     })
   }
-  const submitRegister = event => {
+  const submitRegister = async event => {
     event.preventDefault()
-    console.log('form submitted', registerData)
     setRegisterData(registerData)
-    console.log(registerData)
+    if (registerData.password !== registerData.password2) {
+      console.log('passwords do not match')
+      setRegisterData({ email: '', password: '', password2: '' })
+    } else {
+      const newUser = {
+        email,
+        heroId,
+        password
+      }
+      try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        console.log(newUser)
+        const body = JSON.stringify(newUser)
+        const res = await axios.post('/api/users', body, config)
+        console.log(res.data)
+        setRegisterData({ email: '', password: '', password2: '', heroId: '' })
+      } catch (error) {
+        console.error('there was an error')
+      }
+    }
   }
 
   return (
@@ -34,6 +56,7 @@ const Register = () => {
           label='Email'
           type='email'
           name='email'
+          value={registerData.email}
           onChange={onChange}
           autoComplete='email'
           margin='normal'
@@ -43,6 +66,7 @@ const Register = () => {
           id='outlined-heroid-input'
           label='Hero Id'
           onChange={onChange}
+          value={registerData.heroId}
           type='number'
           name='heroId'
           margin='normal'
@@ -54,6 +78,7 @@ const Register = () => {
           name='password'
           type='password'
           onChange={onChange}
+          value={registerData.password}
           autoComplete='current-password'
           margin='normal'
           variant='outlined'
@@ -64,6 +89,7 @@ const Register = () => {
           name='password2'
           type='password'
           onChange={onChange}
+          value={registerData.password2}
           autoComplete='current-password'
           margin='normal'
           variant='outlined'
