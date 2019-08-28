@@ -6,7 +6,9 @@ import { FormControl } from '@material-ui/core'
 import axios from 'axios'
 import { setAlert } from '../../actions/alert'
 
-const Register = props => {
+import PropTypes from 'prop-types'
+
+const Register = ({ setAlert }) => {
   const [registerData, setRegisterData] = useState({
     email: '',
     heroId: '',
@@ -25,8 +27,13 @@ const Register = props => {
     event.preventDefault()
     setRegisterData(registerData)
     if (registerData.password !== registerData.password2) {
-      props.setAlert('Passwords do not match', 'danger')
-      setRegisterData({ email: '', password: '', password2: '' })
+      setAlert('Passwords do not match', 'danger')
+      setRegisterData({
+        email: registerData.email,
+        heroId: registerData.heroId,
+        password: '',
+        password2: ''
+      })
     } else {
       const newUser = {
         email,
@@ -106,6 +113,10 @@ const Register = props => {
       </FormControl>
     </Fragment>
   )
+}
+
+Register.protoTypes = {
+  setAlert: PropTypes.func.isRequired
 }
 
 export default connect(
