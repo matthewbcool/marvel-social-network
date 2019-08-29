@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import TextField from '@material-ui/core/TextField'
+import { Redirect } from 'react-router-dom'
 import FormControl from '@material-ui/core/FormControl'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
@@ -7,7 +8,7 @@ import PropTypes from 'prop-types'
 import { login } from '../../actions/auth'
 import { setAlert } from '../../actions/alert'
 
-const Login = ({ setAlert, login }) => {
+const Login = ({ setAlert, login, isAuthenticated }) => {
   const [loginData, setLoginData] = useState({
     email: '',
     password: ''
@@ -30,6 +31,10 @@ const Login = ({ setAlert, login }) => {
     } else {
       login({ email, password })
     }
+  }
+
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />
   }
 
   return (
@@ -70,10 +75,15 @@ const Login = ({ setAlert, login }) => {
 }
 
 Login.protoTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 }
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { setAlert, login }
 )(Login)

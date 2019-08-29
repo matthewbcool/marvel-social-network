@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { FormControl } from '@material-ui/core'
-import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 import { setAlert } from '../../actions/alert'
 import { register } from '../../actions/auth'
 import PropTypes from 'prop-types'
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [registerData, setRegisterData] = useState({
     email: '',
     heroId: '',
@@ -38,6 +38,10 @@ const Register = ({ setAlert, register }) => {
       register({ email, heroId, password })
       setRegisterData({ email: '', password: '', password2: '', heroId: '' })
     }
+  }
+
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />
   }
 
   return (
@@ -103,7 +107,11 @@ Register.protoTypes = {
   register: PropTypes.func.isRequired
 }
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { setAlert, register }
 )(Register)
