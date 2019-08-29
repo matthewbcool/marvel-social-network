@@ -36,23 +36,7 @@ const Register = ({ setAlert, register }) => {
       })
     } else {
       register({ email, heroId, password })
-      const newUser = {
-        email,
-        heroId,
-        password
-      }
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-        const body = JSON.stringify(newUser)
-        const res = await axios.post('/api/users', body, config)
-        setRegisterData({ email: '', password: '', password2: '', heroId: '' })
-      } catch (error) {
-        console.error('there was an error')
-      }
+      setRegisterData({ email: '', password: '', password2: '', heroId: '' })
     }
   }
 

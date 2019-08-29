@@ -24,6 +24,7 @@ const Alert = ({ alerts }) => {
           vertical: 'bottom',
           horizontal: 'left'
         }}
+        key={alert.id}
         open={open}
         ContentProps={{
           'aria-describedby': alert.msg

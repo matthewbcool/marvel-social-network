@@ -41,12 +41,11 @@ export const register = ({ email, heroId, password }) => async dispatch => {
       payload: res.data
     })
   } catch (err) {
-    console.log(err)
-    /* const errors = err.response.data.errors
+    const errors = err.response.data.errors
 
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
-    } */
+    }
 
     dispatch({
       type: REGISTER_FAIL
