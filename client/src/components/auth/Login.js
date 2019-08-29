@@ -5,9 +5,13 @@ import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { login } from '../../actions/auth'
+import { setAlert } from '../../actions/alert'
 
-const Login = ({ login }) => {
-  const [loginData, setLoginData] = useState({})
+const Login = ({ setAlert, login }) => {
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: ''
+  })
 
   const { email, password } = loginData
   const onChange = event => {
@@ -19,8 +23,13 @@ const Login = ({ login }) => {
   const submitLogin = async event => {
     event.preventDefault()
     setLoginData(loginData)
-    console.log(loginData)
-    login({ email, password })
+    console.log(loginData.password.length)
+    if (loginData.password.length < 5) {
+      setAlert('Password should be 6 characters or longer', 'secondary')
+      setLoginData({ ...loginData, password: '' })
+    } else {
+      login({ email, password })
+    }
   }
 
   return (
@@ -33,8 +42,9 @@ const Login = ({ login }) => {
           name='email'
           autoComplete='email'
           margin='normal'
-          value={loginData.email}
           onChange={onChange}
+          value={loginData.email}
+          variant='outlined'
         />
         <TextField
           id='outlined-password-input'
@@ -45,6 +55,7 @@ const Login = ({ login }) => {
           onChange={onChange}
           autoComplete='current-password'
           margin='normal'
+          variant='outlined'
         />
         <Button
           type='submit'
@@ -64,5 +75,5 @@ Login.protoTypes = {
 
 export default connect(
   null,
-  { login }
+  { setAlert, login }
 )(Login)
