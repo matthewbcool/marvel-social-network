@@ -2,9 +2,11 @@ import React, { useState, Fragment } from 'react'
 import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import Button from '@material-ui/core/Button'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { login } from '../../actions/auth'
 
-const Login = () => {
+const Login = ({ login }) => {
   const [loginData, setLoginData] = useState({})
 
   const { email, password } = loginData
@@ -17,21 +19,8 @@ const Login = () => {
   const submitLogin = async event => {
     event.preventDefault()
     setLoginData(loginData)
-    if (loginData.email.length > 3 && loginData.password.length > 6) {
-      try {
-        const loginBody = {
-          email,
-          password
-        }
-        const config = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-        const res = await axios.post('api/auth', loginBody, config)
-        console.log(res.data)
-      } catch (error) {}
-    }
+    console.log(loginData)
+    login({ email, password })
   }
 
   return (
@@ -44,18 +33,18 @@ const Login = () => {
           name='email'
           autoComplete='email'
           margin='normal'
+          value={loginData.email}
           onChange={onChange}
-          variant='outlined'
         />
         <TextField
           id='outlined-password-input'
           label='Password'
           name='password'
           type='password'
+          value={loginData.password}
           onChange={onChange}
           autoComplete='current-password'
           margin='normal'
-          variant='outlined'
         />
         <Button
           type='submit'
@@ -69,4 +58,11 @@ const Login = () => {
   )
 }
 
-export default Login
+Login.protoTypes = {
+  login: PropTypes.func.isRequired
+}
+
+export default connect(
+  null,
+  { login }
+)(Login)
