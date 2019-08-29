@@ -52,7 +52,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           label='Email'
           type='email'
           name='email'
-          value={registerData.email}
+          value={email}
           onChange={onChange}
           autoComplete='email'
           margin='normal'
@@ -62,7 +62,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           id='outlined-heroid-input'
           label='Hero Id'
           onChange={onChange}
-          value={registerData.heroId}
+          value={heroId}
           type='number'
           name='heroId'
           margin='normal'
@@ -74,7 +74,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           name='password'
           type='password'
           onChange={onChange}
-          value={registerData.password}
+          value={password}
           autoComplete='current-password'
           margin='normal'
           variant='outlined'
@@ -85,7 +85,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           name='password2'
           type='password'
           onChange={onChange}
-          value={registerData.password2}
+          value={password2}
           autoComplete='current-password'
           margin='normal'
           variant='outlined'

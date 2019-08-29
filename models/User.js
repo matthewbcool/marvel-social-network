@@ -18,7 +18,8 @@ const UserSchema = new mongoose.Schema({
     type: String
   },
   heroId: {
-    type: String
+    type: String,
+    required: true
   },
   date: {
     type: Date,
